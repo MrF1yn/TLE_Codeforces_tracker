@@ -11,6 +11,9 @@ This project is a full-stack web application developed for TLE Eliminators to ef
 ## Hosted Link
 https://tle-cf-frontend.vercel.app/
 
+## Video Link
+https://youtu.be/l-1AfFJC_KE
+
 ## Table of Contents
 
 - [Introduction](#-introduction)
