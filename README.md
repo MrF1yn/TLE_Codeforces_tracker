@@ -4,11 +4,11 @@ A comprehensive MERN stack application designed for tracking and managing CodeFo
 
 **Created by:** Dibyajyoti Dey
 
-## 🚀 Introduction
+## Introduction
 
 This project is a full-stack web application developed for TLE Eliminators to efficiently track and monitor competitive programming progress on CodeForces. The application provides real-time profile synchronization, detailed analytics, and automated email notifications to help students and instructors stay updated with their competitive programming journey.
 
-## 📚 Table of Contents
+## Table of Contents
 
 - [🚀 Introduction](#-introduction)
 - [✨ Key Features](#-key-features)
