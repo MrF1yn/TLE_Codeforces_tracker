@@ -8,20 +8,23 @@ A comprehensive MERN stack application designed for tracking and managing CodeFo
 
 This project is a full-stack web application developed for TLE Eliminators to efficiently track and monitor competitive programming progress on CodeForces. The application provides real-time profile synchronization, detailed analytics, and automated email notifications to help students and instructors stay updated with their competitive programming journey.
 
+## Hosted Link
+https://tle-cf-frontend.vercel.app/
+
 ## Table of Contents
 
-- [🚀 Introduction](#-introduction)
-- [✨ Key Features](#-key-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [📁 Backend Architecture](#-backend-architecture)
-- [📷 Application Screenshots](#-application-screenshots)
-- [📊 Features in Detail](#-features-in-detail)
-- [📡 Backend API Documentation](#-backend-api-documentation)
-- [🚀 Deployment Info](#-deployment-info)
-- [🤝 Contributing](#-contributing)
-- [📝 License](#-license)
-- [👨‍💻 Author](#-author)
-- [🙏 Acknowledgments](#-acknowledgments)
+- [Introduction](#-introduction)
+- [Key Features](#-key-features)
+- [Tech Stack](#️-tech-stack)
+- [Backend Architecture](#-backend-architecture)
+- [Application Screenshots](#-application-screenshots)
+- [Features in Detail](#-features-in-detail)
+- [Backend API Documentation](#-backend-api-documentation)
+- [Deployment Info](#-deployment-info)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Author](#-author)
+- [Acknowledgments](#-acknowledgments)
 
 ---
 
