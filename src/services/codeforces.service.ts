@@ -12,20 +12,22 @@ interface CodeforcesUser {
     maxRank?: string;
     titlePhoto?: string;
 }
+export interface CodeforcesProblem {
+    contestId: number;
+    index: string;
+    name: string;
+    type: string;
+    rating?: number;
+    tags: string[];
+}
+
 
 interface CodeforcesContest {
     id: number;
     contestId: number;
     creationTimeSeconds: number;
     relativeTimeSeconds: number;
-    problem: {
-        contestId: number;
-        index: string;
-        name: string;
-        type: string;
-        rating?: number;
-        tags: string[];
-    };
+    problem: CodeforcesProblem;
     author: {
         contestId: number;
         members: Array<{ handle: string }>;
@@ -66,6 +68,7 @@ interface ContestProblemsData {
     contestId: number;
     totalProblems: number;
     problemsSolved: number;
+    hardestRatingProblem:CodeforcesProblem | null;
 }
 
 export class CodeforcesService {
@@ -182,7 +185,8 @@ export class CodeforcesService {
             contestProblemsMap.set(change.contestId, {
                 contestId: change.contestId,
                 totalProblems: 0,
-                problemsSolved: 0
+                problemsSolved: 0,
+                hardestRatingProblem: null
             });
         });
 
@@ -205,7 +209,7 @@ export class CodeforcesService {
             // Get unique problems in this contest
             const uniqueProblems = new Set<string>();
             const solvedProblems = new Set<string>();
-
+            let hardestRatingProblem:any = null;
             contestSubs.forEach(sub => {
                 const problemKey = `${sub.problem.contestId}${sub.problem.index}`;
                 uniqueProblems.add(problemKey);
@@ -213,10 +217,16 @@ export class CodeforcesService {
                 if (sub.verdict === 'OK') {
                     solvedProblems.add(problemKey);
                 }
+                if (sub.problem.rating) {
+                    if (hardestRatingProblem === null || sub.problem.rating > hardestRatingProblem.rating) {
+                        hardestRatingProblem = sub.problem;
+                    }
+                }
             });
 
             contestData.totalProblems = uniqueProblems.size;
             contestData.problemsSolved = solvedProblems.size;
+            contestData.hardestRatingProblem = hardestRatingProblem ? hardestRatingProblem.rating : null;
         });
 
         return contestProblemsMap;
@@ -415,7 +425,8 @@ export class CodeforcesService {
                 ratingChange: change.newRating - change.oldRating,
                 contestTime: new Date(change.ratingUpdateTimeSeconds * 1000),
                 totalProblems: problemsData?.totalProblems || 0,
-                problemsSolved: problemsData?.problemsSolved || 0
+                problemsSolved: problemsData?.problemsSolved || 0,
+                hardestRatingProblem: problemsData?.hardestRatingProblem || null
             };
         });
 

@@ -39,21 +39,21 @@ model Student {
 }
 
 model Contest {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  studentId       String   @db.ObjectId
-  codeforcesId    Int
-  name            String
-  participantType String
-  rank            Int?
-  oldRating       Int?
-  newRating       Int?
-  ratingChange    Int?
-  problemsSolved  Int      @default(0)
-  totalProblems   Int      @default(0)
-  contestTime     DateTime
-  createdAt       DateTime @default(now())
-
-  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId            String   @db.ObjectId
+  codeforcesId         Int
+  name                 String
+  participantType      String
+  rank                 Int?
+  oldRating            Int?
+  newRating            Int?
+  ratingChange         Int?
+  problemsSolved       Int      @default(0)
+  totalProblems        Int      @default(0)
+  contestTime          DateTime
+  createdAt            DateTime @default(now())
+  hardestRatingProblem String?
+  student              Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   // Primary index for student-specific queries
   @@unique([studentId, codeforcesId])

@@ -1,0 +1,14 @@
+@keyframes pulse-expand {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.8);
+        opacity: 0;
+    }
+}
+
+.animate-pulse-expand {
+    animation: pulse-expand 2s ease-out infinite;
+}
