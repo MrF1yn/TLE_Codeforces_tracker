@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  titlePhoto           String? // URL to student's title photo
+  email                String?             @unique
+  phoneNumber          String?             @unique
+  codeforcesHandle     String?             @unique
+  lastDataUpdate       DateTime?
+  emailReminderEnabled Boolean             @default(true)
+  reminderEmailCount   Int                 @default(0)
+  lastSubmissionDate   DateTime?
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  rating               Int?                @default(0)
+  maxRating            Int?                @default(0) // Maximum rating achieved
+  rank                 String?
+  maxRank              String?
+  contests             Contest[]
+  problemStats         ProblemStats[]
+  submissionHeatmap    SubmissionHeatmap[]
+  EmailLog             EmailLog[]
+
+  // Composite index for filtering active students with handles
+  @@index([codeforcesHandle, lastDataUpdate])
+  // Index for email reminders
+  @@index([emailReminderEnabled, lastSubmissionDate])
+  // Index for rating-based queries
+  @@index([rating])
+  @@map("students")
+}
+
+model Contest {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId       String   @db.ObjectId
+  codeforcesId    Int
+  name            String
+  participantType String
+  rank            Int?
+  oldRating       Int?
+  newRating       Int?
+  ratingChange    Int?
+  problemsSolved  Int      @default(0)
+  totalProblems   Int      @default(0)
+  contestTime     DateTime
+  createdAt       DateTime @default(now())
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // Primary index for student-specific queries
+  @@unique([studentId, codeforcesId])
+  @@index([studentId, contestTime])
+  // Index for time-based queries across all contests
+  @@index([contestTime])
+  // Index for rating change analysis
+  @@index([studentId, ratingChange])
+  @@map("contests")
+}
+
+// Aggregated problem solving statistics per time period
+model ProblemStats {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId       String   @db.ObjectId
+  date            DateTime // Date for this aggregation (daily granularity)
+  totalSolved     Int      @default(0)
+  maxRatingSolved Int? // Highest rating problem solved on this date
+  avgRating       Float? // Average rating of problems solved on this date
+
+  // Problem count by rating buckets (for bar chart)
+  rating800      Int @default(0)
+  rating900      Int @default(0)
+  rating1000     Int @default(0)
+  rating1100     Int @default(0)
+  rating1200     Int @default(0)
+  rating1300     Int @default(0)
+  rating1400     Int @default(0)
+  rating1500     Int @default(0)
+  rating1600     Int @default(0)
+  rating1700     Int @default(0)
+  rating1800     Int @default(0)
+  rating1900     Int @default(0)
+  rating2000     Int @default(0)
+  rating2100     Int @default(0)
+  rating2200     Int @default(0)
+  rating2300     Int @default(0)
+  rating2400Plus Int @default(0)
+  ratingUnknown  Int @default(0) // Problems without rating
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, date])
+  @@index([date]) // For cross-student analytics
+  @@map("problem_stats")
+}
+
+// Submission heatmap data (daily aggregation)
+model SubmissionHeatmap {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId       String   @db.ObjectId
+  date            DateTime // Date for this heatmap cell
+  submissionCount Int      @default(0)
+  acceptedCount   Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, date])
+  @@index([date]) // For cross-student analytics
+  @@map("submission_heatmap")
+}
+
+model CronConfig {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String    @unique
+  cronExpression String
+  enabled        Boolean   @default(true)
+  lastRun        DateTime?
+  nextRun        DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Index for cron job management
+  @@index([enabled, nextRun])
+  @@map("cron_configs")
+}
+
+model EmailTemplate {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  subject   String
+  body      String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("email_templates")
+}
+
+model EmailLog {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId    String   @db.ObjectId
+  type         String
+  sentAt       DateTime @default(now())
+  success      Boolean  @default(true)
+  errorMessage String?
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // Index for student-specific email history
+  @@index([studentId, sentAt])
+  // Index for email analytics
+  @@index([type, success, sentAt])
+  @@map("email_logs")
+}
