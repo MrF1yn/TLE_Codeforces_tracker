@@ -426,7 +426,7 @@ export class CodeforcesService {
                 contestTime: new Date(change.ratingUpdateTimeSeconds * 1000),
                 totalProblems: problemsData?.totalProblems || 0,
                 problemsSolved: problemsData?.problemsSolved || 0,
-                hardestRatingProblem: problemsData?.hardestRatingProblem || null
+                hardestRatingProblem: JSON.stringify(problemsData?.hardestRatingProblem) || null
             };
         });
 
