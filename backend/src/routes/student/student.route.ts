@@ -17,6 +17,7 @@ export class StudentRoute {
     this.router.post('/students', this.studentController.addStudent);
     this.router.get('/emailTemplate', this.studentController.getEmailTemplate);
     this.router.put('/emailTemplate', this.studentController.updateEmailTemplate);
+    this.router.get('/students/id/:studentId', this.studentController.getStudentById);
     this.router.delete('/students/:studentId', this.studentController.deleteStudent);
     this.router.get('/students/:studentId/contests', this.studentController.getContestHistory);
     this.router.get('/students/:studentId/problems', this.studentController.getProblemStats);

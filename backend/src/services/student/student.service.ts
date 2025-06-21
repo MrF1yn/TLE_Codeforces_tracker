@@ -125,6 +125,60 @@ export class StudentService {
     }
   }
 
+  //get student by id
+    async getStudentById(studentId: string): Promise<IResponse<Student>> {
+        try {
+        if (!studentId) {
+            return {
+            success: false,
+            message: 'Student ID is required',
+            data: null
+            };
+        }
+
+        const student = await this.prisma.student.findUnique({
+            where: { id: studentId },
+            select: {
+            id: true,
+            name: true,
+            email: true,
+            rating: true,
+            codeforcesHandle: true,
+            lastDataUpdate: true,
+            reminderEmailCount: true,
+            emailReminderEnabled: true,
+            phoneNumber: true,
+            lastSubmissionDate: true,
+            maxRating: true,
+            rank: true,
+            maxRank: true,
+            titlePhoto: true
+            }
+        });
+
+        if (!student) {
+            return {
+            success: false,
+            message: 'Student not found',
+            data: null
+            };
+        }
+
+        return {
+            success: true,
+            message: 'Student fetched successfully',
+            data: student
+        };
+        } catch (error) {
+        console.error('Error fetching student:', error);
+        return {
+            success: false,
+            message: 'Failed to fetch student',
+            data: null
+        };
+        }
+    }
+
   async addStudent(studentData: AddStudentData): Promise<IResponse<Student>> {
     try {
       if (!studentData.name || studentData.name.trim() === '' || studentData.codeforcesHandle === '') {

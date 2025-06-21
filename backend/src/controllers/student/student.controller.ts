@@ -28,6 +28,20 @@ export class StudentController {
     }
   }
 
+    async getStudentById(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
+        try {
+        const { studentId } = req.params;
+        const result = await this.studentService.getStudentById(studentId);
+        res.status(200).json(result);
+        } catch (error) {
+        next(error);
+        }
+    }
+
   async getContestHistory(
       req: Request,
       res: Response,
