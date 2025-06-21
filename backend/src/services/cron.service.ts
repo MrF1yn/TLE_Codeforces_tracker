@@ -261,6 +261,7 @@ export class CronService {
         console.log(`Manually triggering cron job: ${jobName}`);
 
         try {
+            await this.updateCronRunTime(jobName, 'start');
             switch (jobName) {
                 case 'DATA_SYNC':
                     await this.runDataSync();
@@ -271,8 +272,8 @@ export class CronService {
                 default:
                     throw new Error(`Unknown cron job: ${jobName}`);
             }
-
             console.log(`Manual trigger completed for: ${jobName}`);
+            await this.updateCronRunTime(jobName, 'complete');
         } catch (error) {
             console.error(`Error in manual trigger for ${jobName}:`, error);
             throw error;
