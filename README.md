@@ -72,7 +72,7 @@ https://youtu.be/l-1AfFJC_KE
 - **Node.js** - JavaScript runtime environment
 - **Express.js** - Fast, unopinionated web framework
 - **MongoDB** - NoSQL database for data storage
-- **Mongoose** - MongoDB object modeling
+- **Prisma ORM** - MongoDB object modeling
 
 ## 📁 Backend Architecture
 
@@ -260,4 +260,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-*Built with ❤️ for the competitive programming community*
+*Built with ❤️ by Dibyajyoti Dey*
