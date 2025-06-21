@@ -1,26 +1,15 @@
-# Use the official Node.js image as the base image
-FROM node:18
+FROM node:22
 
-# Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-COPY . .
-# Install the dependencies
 RUN npm install
 
+COPY . .
+COPY .env .
 RUN npx prisma generate
+EXPOSE 5000
 
-# Copy the rest of the application code to the working directory
-
-
-# Build the application (if needed)
-RUN npm run build
-
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Command to run the application
-CMD ["npm", "start"]
+# Define the command to run the application
+CMD ["npm", "run", "start"]

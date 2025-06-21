@@ -19,6 +19,7 @@ interface AddStudentData {
   name: string;
   email?: string;
   codeforcesHandle?: string;
+    phoneNumber?: string;
 }
 
 interface ContestData {
@@ -149,6 +150,21 @@ export class StudentService {
         }
       }
 
+      //check if phone number already exists (if provided)
+        if (studentData.phoneNumber) {
+            const existingPhoneStudent = await this.prisma.student.findUnique({
+            where: { phoneNumber: studentData.phoneNumber }
+            });
+
+            if (existingPhoneStudent) {
+            return {
+                success: false,
+                message: 'A student with this phone number already exists',
+                data: null
+            };
+            }
+        }
+
       // Check if codeforces handle already exists (if provided)
       if (studentData.codeforcesHandle) {
         const existingHandleStudent = await this.prisma.student.findUnique({
@@ -168,6 +184,7 @@ export class StudentService {
         data: {
           name: studentData.name.trim(),
           email: studentData.email || null,
+            phoneNumber: studentData.phoneNumber || null,
           codeforcesHandle: studentData.codeforcesHandle || null,
           rating: 0,
           emailReminderEnabled: true,

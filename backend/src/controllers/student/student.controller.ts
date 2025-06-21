@@ -207,12 +207,13 @@ export class StudentController {
       next: NextFunction,
   ): Promise<void> {
     try {
-      const { name, email, codeforcesHandle } = req.body;
+      const { name, email, codeforcesHandle, phoneNumber } = req.body;
 
       const result = await this.studentService.addStudent({
         name,
         email,
-        codeforcesHandle
+        codeforcesHandle,
+        phoneNumber
       });
       res.status(201).json(result);
     } catch (error) {
