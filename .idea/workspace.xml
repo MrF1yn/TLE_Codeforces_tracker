@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09d560a2-3d57-4a8e-90ac-320329590e57" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/student/student.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/student/student.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/services/student/student.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/services/student/student.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/docker-compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +96,7 @@
       <workItem from="1750300294710" duration="2504000" />
       <workItem from="1750324609983" duration="3897000" />
       <workItem from="1750335863519" duration="10369000" />
-      <workItem from="1750534255214" duration="1372000" />
+      <workItem from="1750534255214" duration="1625000" />
     </task>
     <servers />
   </component>
